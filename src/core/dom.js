@@ -5,12 +5,23 @@ class Dom {
       : selector;
   }
 
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector);
+  }
+
   html(html) {
     if (typeof html === 'string') {
       this.$el.innerHTML = html;
       return this;
     }
     return this.$el.outerHTML.trim();
+  }
+
+  css(styles = {}) {
+    Object.keys(styles).forEach(key => {
+      this.$el.style[key] = styles[key];
+    });
+    return this;
   }
 
   append(node) {
@@ -27,6 +38,14 @@ class Dom {
     return this;
   }
 
+  get data() {
+    return this.$el.dataset;
+  }
+
+  closest(selector) {
+    return $(this.$el.closest(selector));
+  }
+
   clear() {
     this.html('');
     return this;
@@ -38,6 +57,10 @@ class Dom {
 
   off(eventType, callback) {
     this.$el.removeEventListener(eventType, callback);
+  }
+
+  getClientRect() {
+    return this.$el.getBoundingClientRect();
   }
 }
 
