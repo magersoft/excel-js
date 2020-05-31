@@ -25,6 +25,16 @@
     border: 1px solid $border-color;
     background: #f8f9fa;
     border-top: none;
+    position: relative;
+
+    .row-resize {
+      left: 0;
+      height: 3px;
+
+      &:hover {
+        cursor: row-resize;
+      }
+    }
   }
 
   .row-data {
@@ -42,6 +52,16 @@
     border-top: 0;
     border-left: 0;
     height: 100%;
+    position: relative;
+
+    .col-resize {
+      top: 0;
+      width: 3px;
+
+      &:hover {
+        cursor: col-resize;
+      }
+    }
   }
 
   .cell {
@@ -64,4 +84,17 @@
     }
   }
 
+  .row-resize,
+  .col-resize {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: $primary-color;
+    opacity: 0;
+    z-index: 1000;
+
+    &:hover {
+      opacity: 1!important;
+    }
+  }
 }
