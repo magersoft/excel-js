@@ -21,9 +21,15 @@ class Dom {
     return this.$el.outerHTML.trim();
   }
 
-  innerText(text) {
-    this.$el.innerText = text;
-    return this;
+  text(text) {
+    if (typeof text === 'string') {
+      this.$el.textContent = text;
+      return this;
+    }
+    if (this.$el.tagName.toLowerCase() === 'input') {
+      return this.$el.value.trim();
+    }
+    return this.$el.textContent.trim();
   }
 
   css(styles = {}) {
@@ -94,10 +100,6 @@ class Dom {
 
   get data() {
     return this.$el.dataset;
-  }
-
-  get text() {
-    return this.$el.innerText;
   }
 }
 
