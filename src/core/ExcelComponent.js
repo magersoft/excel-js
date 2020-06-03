@@ -3,9 +3,13 @@ import { DOMListener } from './DOMListener';
 export class ExcelComponent extends DOMListener {
   constructor($root, options = {}) {
     super($root, options.listeners);
+
     this.name = options.name || '';
     this.emitter = options.emitter;
-    this.subcribers = [];
+    this.subscribe = options.subscribe || [];
+    this.store = options.store;
+
+    this.subscribers = [];
 
     this.prepare();
   }
@@ -18,7 +22,17 @@ export class ExcelComponent extends DOMListener {
 
   destroy() {
     this.removeDOMListeners();
-    this.subcribers.forEach(sub => sub());
+    this.subscribers.forEach(sub => sub());
+  }
+
+  storeChanged() {}
+
+  isWatching(key) {
+    return this.subscribe.includes(key);
+  }
+
+  $dispatch(action) {
+    this.store.dispatch(action);
   }
 
   $emit(event, ...args) {
@@ -27,7 +41,7 @@ export class ExcelComponent extends DOMListener {
 
   $on(event, fn) {
     const sub = this.emitter.subscribe(event, fn);
-    this.subcribers.push(sub);
+    this.subscribers.push(sub);
   }
 
   toHTML() {
