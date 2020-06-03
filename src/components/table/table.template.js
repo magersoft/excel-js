@@ -1,6 +1,6 @@
 import { CODES, colsCount } from '@/components/table/table.helpers';
-import { defaultStyles } from '@/constans';
-import { camelCaseToDashCase } from '@core/utils';
+import { toInlineStyles } from '@core/utils';
+import { defaultStyles } from '@/config';
 
 const DATA_TYPE = 'resizable';
 const DEFAULT_WIDTH = 120;
@@ -29,9 +29,10 @@ function toCell(state, row) {
     const id = `${row}:${col}`;
     const width = getWidth(state.colState, col);
     const data = state.dataState[id];
-    const styles = Object.keys(defaultStyles)
-        .map(key => `${camelCaseToDashCase(key)}: ${defaultStyles[key]}`)
-        .join(';');
+    const styles = toInlineStyles({
+      ...defaultStyles,
+      ...state.stylesState[id]
+    });
 
     return `
       <div 

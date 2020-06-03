@@ -10,11 +10,11 @@ import {
 import { TableSelection } from '@/components/table/TableSelection';
 import { $ } from '@core/dom';
 import * as actions from '@/store/actions';
-import { defaultStyles } from '@/constans';
+import { defaultStyles, defaultTableSize } from '@/config';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
-  static rowCounts = 20;
+  static rowCounts = defaultTableSize;
 
   constructor($root, options) {
     super($root, {
@@ -44,6 +44,10 @@ export class Table extends ExcelComponent {
 
     this.$on('toolbar:applyStyle', style => {
       this.selection.applyStyle(style);
+      this.$dispatch(actions.applyStyle({
+        value: style,
+        ids: this.selection.selectedIds
+      }));
     });
   }
 
