@@ -10,6 +10,7 @@ import {
 import { TableSelection } from '@/components/table/TableSelection';
 import { $ } from '@core/dom';
 import * as actions from '@/store/actions';
+import { defaultStyles } from '@/constans';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -41,14 +42,17 @@ export class Table extends ExcelComponent {
       this.selection.current.focus();
     });
 
-    // this.$subscribe(state => {
-    //   console.log('table state ', state);
-    // });
+    this.$on('toolbar:applyStyle', style => {
+      this.selection.applyStyle(style);
+    });
   }
 
   selectCell($cell) {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
+
+    const styles = $cell.getStyles(Object.keys(defaultStyles));
+    this.$dispatch(actions.changeStyles(styles));
   }
 
   updateTextInStore(value) {

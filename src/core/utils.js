@@ -3,6 +3,10 @@ export function firstUpper(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+export function camelCaseToDashCase(string) {
+  return string.replace(/([A-Z])/g, g => `-${g[0].toLowerCase()}`);
+}
+
 export function range(start, end) {
   if (start > end) {
     [end, start] = [start, end];
@@ -17,4 +21,11 @@ export function storage(key, data = null) {
     return JSON.parse(localStorage.getItem(key));
   }
   return localStorage.setItem(key, JSON.stringify(data));
+}
+
+export function isEqual(a, b) {
+  if (typeof a === 'object' && typeof b === 'object') {
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
+  return a === b;
 }
