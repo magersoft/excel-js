@@ -1,6 +1,7 @@
 import { CODES, colsCount } from '@/components/table/table.helpers';
 import { toInlineStyles } from '@core/utils';
 import { defaultStyles } from '@/config';
+import { parse } from '@core/parse';
 
 const DATA_TYPE = 'resizable';
 const DEFAULT_WIDTH = 120;
@@ -41,8 +42,9 @@ function toCell(state, row) {
         data-type="cell"
         data-col="${col}"
         data-id="${id}"
+        data-value="${data || ''}"
         style="${styles}; width: ${width}"
-      >${data || ''}</div>`;
+      >${parse(data) || ''}</div>`;
   };
 }
 
